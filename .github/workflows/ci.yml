@@ -26,6 +26,12 @@ jobs:
         make venv
         source .venv/bin/activate
         make install
+
+    - name: Install additional requirements
+      run: |
+        source .venv/bin/activate
+        pip install -r requirements.txt
+        pip install -r requirements-test.txt
     
     - name: Run model tests
       run: |
@@ -36,4 +42,3 @@ jobs:
       run: |
         source .venv/bin/activate
         make api-test
-
