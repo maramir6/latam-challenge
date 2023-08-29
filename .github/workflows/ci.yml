@@ -32,6 +32,11 @@ jobs:
         source .venv/bin/activate
         pip install -r requirements.txt
         pip install -r requirements-test.txt
+
+    - name: Install Flask
+      run: |
+        source .venv/bin/activate
+        pip install Flask==2.2.2
     
     - name: Run model tests
       run: |
