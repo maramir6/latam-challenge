@@ -11,14 +11,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-    - name: Set up gcloud CLI
-      uses: google-github-actions/setup-gcloud@main
+    
+    - name: Setup gcloud CLI
+      uses: google-github-actions/setup-gcloud@v1
       with:
-        service_account_key: ${{ secrets.GCLOUD_AUTH }}
         project_id: ${{ secrets.GCP_PROJECT }}
-        export_default_credentials: true
-
+        version: 'latest'
+    
+    - name: Authenticate with gcloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCLOUD_AUTH }}
+    
     - name: Deploy to Cloud Run
       run: |
         gcloud run deploy sample --port 8080 --allow-unauthenticated --region us-central1 --source .
