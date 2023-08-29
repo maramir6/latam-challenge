@@ -1,0 +1,44 @@
+name: 'Continuous Integration'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11.3
+
+    - name: Install Make
+      run: sudo apt-get install make
+    
+    - name: Create virtual environment and install dependencies
+      run: |
+        make venv
+        source .venv/bin/activate
+        make install
+    
+    - name: Build
+      run: |
+        source .venv/bin/activate
+        make build
+
+    - name: Run model tests
+      run: |
+        source .venv/bin/activate
+        make model-test
+    
+    - name: Run API tests
+      run: |
+        source .venv/bin/activate
+        make api-test
+
